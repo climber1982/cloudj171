@@ -10,9 +10,8 @@ import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
-@EnableEurekaClient
-@EnableDiscoveryClient
-
+@EnableEurekaClient //注册
+@EnableDiscoveryClient//集中配置
 public class ClientTwoMain {
 
     public static void main(String[] args) {
