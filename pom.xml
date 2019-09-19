@@ -8,6 +8,7 @@
         <module>clienttwo</module>
         <module>registerService</module>
         <module>config</module>
+        <module>mq</module>
     </modules>
 
     <parent>
