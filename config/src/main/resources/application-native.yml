@@ -10,6 +10,8 @@ spring:
     name: config-server
 eureka:
   client:
+    registerWithEureka: true #否注册自身到eureka服务器
+    fetchRegistry: true #是否从eureka服务器获取注册信息
     service-url:
       defaultZone: http://192.168.1.222:8000/eureka/
 
