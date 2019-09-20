@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>用户列表</title>
+    <link rel="stylesheet" type="text/css" href="/static/easyui/themes/metro/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/static/easyui/themes/mobile.css">
+    <link rel="stylesheet" type="text/css" href="/static/easyui/themes/icon.css">
+    <script type="text/javascript" src="/static/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/static/easyui/jquery.easyui.mobile.js"></script>
+</head>
+<body>
+
+<table id="tt" class="easyui-datagrid"
+       url="/showuser"
+        iconCls="icon-save"
+       rownumbers="true" pagination="true"  singleSelect="true">
+    <thead>
+    <tr>
+        <th field="userName" width="50%">用户名</th>
+        <th field="password" width="50%">用户名</th>
+
+
+    </tr>
+    </thead>
+</table>
+
+
+
+
+<script>
+
+    //初始化加载
+    $(document).ready(function () {
+        $('#tt').datagrid('load',{
+            page:1
+        });
+    });
+
+</script>
+</body>
+</html>

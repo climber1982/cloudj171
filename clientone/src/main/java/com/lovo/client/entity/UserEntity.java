@@ -15,7 +15,7 @@ public class UserEntity {
     private  String userId;
     @Column(length = 48)
     private String userName;
-    @JsonIgnore
+  //  @JsonIgnore
     @Column(length = 48)
     private String password;
     @Column(length = 128)

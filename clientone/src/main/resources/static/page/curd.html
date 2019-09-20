@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>表单提交</title>
+    <link rel="stylesheet" type="text/css" href="/static/easyui/themes/metro/easyui.css">
+    <link rel="stylesheet" type="text/css" href="/static/easyui/themes/mobile.css">
+    <link rel="stylesheet" type="text/css" href="/static/easyui/themes/icon.css">
+    <script type="text/javascript" src="/static/easyui/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/easyui/jquery.easyui.min.js"></script>
+    <script type="text/javascript" src="/static/easyui/jquery.easyui.mobile.js"></script>
+</head>
+<body>
+
+<div id="toolbar">
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="newUser()">添加</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">编辑</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="destroyUser()">删除</a>
+</div>
+
+
+<table id="tt" class="easyui-datagrid"
+       url="/page.lovo"
+        iconCls="icon-save"
+       rownumbers="true" pagination="true"  singleSelect="true">
+    <thead>
+    <tr>
+        <th field="studentId" width="30%">studentId</th>
+        <th field="studentName" width="20%">studentName</th>
+        <th field="loginName" width="20%" align="right">loginName</th>
+        <th field="loginPassword" width="30%" align="right">loginPassword</th>
+
+    </tr>
+    </thead>
+</table>
+
+
+<div id="tb" style="padding:3px">
+    <span>studentId:</span>
+    <input id="studentId" style="line-height:26px;border:1px solid #ccc" value="0">
+
+    <a href="#" class="easyui-linkbutton" plain="true" onclick="doSearch()">搜索</a>
+
+</div>
+
+ <!--添加修改模态框 -->
+<div id="dlg" class="easyui-dialog" style="width:400px" data-options="closed:true,modal:true,border:'thin',buttons:'#dlg-buttons'">
+    <form id="fm" method="post" novalidate style="margin:0;padding:20px 50px">
+        <h3>学生信息</h3>
+        <div style="margin-bottom:10px">
+            <input name="studentId" class="easyui-textbox" required="true" label="学生ID:" style="width:100%">
+        </div>
+        <div style="margin-bottom:10px">
+            <input name="studentName" class="easyui-textbox" required="true" label="学生名字:" style="width:100%">
+        </div>
+        <div style="margin-bottom:10px">
+            <input name="loginName" class="easyui-textbox" required="true" label="登录名:" style="width:100%">
+        </div>
+        <div style="margin-bottom:10px">
+            <input name="loginPassword" class="easyui-textbox" required="true" label="登录密码:" style="width:100%">
+        </div>
+    </form>
+</div>
+
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton c6" iconCls="icon-ok" onclick="saveUser()" style="width:90px">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')" style="width:90px">取消</a>
+</div>
+
+<script>
+    //查询
+    function doSearch(){
+        $('#tt').datagrid('load',{
+            studentId: $('#studentId').val()
+        });
+    }
+    //初始化加载
+    $(document).ready(function () {
+        $('#tt').datagrid('load',{
+            studentId: $('#studentId').val(),
+            page:1
+        });
+    });
+
+
+    var url;
+    //添加窗口
+    function newUser(){
+        $('#dlg').dialog('open').dialog('center').dialog('setTitle','添加学生');
+        $('#fm').form('clear');
+        url = '/savaStudent.lovo'; //动态修改为添加url
+    }
+    //编辑用户
+    function editUser(){
+        var row = $('#tt').datagrid('getSelected');
+        if (row){
+            $('#dlg').dialog('open').dialog('center').dialog('setTitle','编辑学生');
+            $('#fm').form('load',row);
+            url = '/updateStudent.lovo?id='+row.studentId;
+        }
+    }
+    //保持用户
+    function saveUser(){
+        $('#fm').form('submit',{
+            url: url,
+            onSubmit: function(){
+                return $(this).form('validate');
+            },
+            success: function(result){
+
+                var result = eval('('+result+')');
+
+                if (result.errorMsg){
+                    $.messager.show({
+                        title: 'Error',
+                        msg: result.errorMsg
+                    });
+                } else {
+                    $('#dlg').dialog('close');		// close the dialog
+                    $('#tt').datagrid('reload');	// reload the user data
+                }
+            }
+        });
+    }
+
+    //删除
+    function destroyUser(){
+        var row = $('#tt').datagrid('getSelected');
+        if (row){
+            $.messager.confirm('提示！','你确定要删除吗?',function(r){
+                if (r){
+                    $.post("/delStudent.lovo",{id:row.studentId},function(result){
+                               alert(r);
+                        $('#tt').datagrid('load',{
+                            studentId: $('#studentId').val()
+                        });
+                    });
+
+                }
+            });
+        }
+    }
+
+</script>
+</body>
+</html>
