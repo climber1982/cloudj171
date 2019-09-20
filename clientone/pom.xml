@@ -42,12 +42,14 @@
             <artifactId>spring-boot-starter-activemq</artifactId>
         </dependency>
 
-        <!-- mysql数据库驱动 -->
+
+
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.21</version>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>2.7.6</version>
         </dependency>
+
         <!--jpa的jar包 ，操作数据库的，类似hibernate-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

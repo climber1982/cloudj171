@@ -36,10 +36,14 @@
     $(document).ready(function () {
         $('#tt').datagrid('load',{
             loadFilter:function(data){
+
                 $.get("/isLogin",function (r) {
-                    alert(r);
+                   var c=eval("("+r+")");
+                   if(c.result==false){
+                       location.href="login.html";
+                   }
                 });
-              //location.href="login.html";
+
             },
             page:1
         });
