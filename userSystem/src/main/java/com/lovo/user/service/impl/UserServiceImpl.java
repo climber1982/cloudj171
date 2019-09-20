@@ -28,6 +28,6 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public UserEntity findUser(UserEntity user) {
-        return null;
+        return userDao.login(user.getUserName(),user.getPassword());
     }
 }

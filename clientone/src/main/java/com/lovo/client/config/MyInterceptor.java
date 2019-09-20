@@ -19,10 +19,13 @@ public class MyInterceptor implements HandlerInterceptor {
             bl=true;
         }else {
 
-            PrintWriter pw = response.getWriter();
-              pw.println("dddddd");
-            pw.flush();
-            pw.close();
+            response.setContentType("text/json;charset=UTF-8");
+            response.setCharacterEncoding("UTF-8");
+            PrintWriter out = response.getWriter();
+            String str ="{'result',false}";
+            out.println(str);
+            out.flush();
+            out.close();
         }
         return bl;
     }

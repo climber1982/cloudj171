@@ -35,8 +35,15 @@
     //初始化加载
     $(document).ready(function () {
         $('#tt').datagrid('load',{
+            loadFilter:function(data){
+                $.get("/isLogin",function (r) {
+                    alert(r);
+                });
+              //location.href="login.html";
+            },
             page:1
         });
+
     });
 
 </script>
